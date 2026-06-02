@@ -3,9 +3,13 @@ package com.mihir.cosmos;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class SpaceEventAdapter extends RecyclerView.Adapter<SpaceEventAdapter.ViewHolder> {
@@ -29,6 +33,9 @@ public class SpaceEventAdapter extends RecyclerView.Adapter<SpaceEventAdapter.Vi
         SpaceEvent event = eventList.get(position);
         holder.title.setText(event.getTitle());
         holder.date.setText(event.getDate());
+        Glide.with(holder.itemView.getContext())
+                .load(event.getImageUrl())
+                .into(holder.image);
     }
 
     @Override
@@ -39,11 +46,13 @@ public class SpaceEventAdapter extends RecyclerView.Adapter<SpaceEventAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title, date;
+        ImageView image;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.eventTitle);
             date = itemView.findViewById(R.id.eventDate);
+            image = itemView.findViewById(R.id.eventImage);
         }
     }
 }
