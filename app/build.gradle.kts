@@ -1,14 +1,11 @@
+import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
 }
 
 android {
     namespace = "com.mihir.cosmos"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.mihir.cosmos"
@@ -18,6 +15,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        localPropertiesFile.inputStream().use { localProperties.load(it) }
+        buildConfigField("String", "ANTHROPIC_API_KEY", "\"${localProperties["ANTHROPIC_API_KEY"]}\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -29,6 +35,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

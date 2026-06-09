@@ -1,10 +1,10 @@
 package com.mihir.cosmos;
-public class SpaceEvent {
 
-    private String title;
-    private String date;
-    private String description;
-    private String imageUrl;
+import java.io.Serializable;
+
+public class SpaceEvent implements Serializable {
+
+    private String title, date, description, imageUrl;
 
     public SpaceEvent(String title, String date, String description, String imageUrl) {
         this.title = title;

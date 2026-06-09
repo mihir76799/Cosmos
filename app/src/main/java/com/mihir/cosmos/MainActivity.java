@@ -3,6 +3,7 @@ package com.mihir.cosmos;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import com.android.volley.Request;
@@ -11,6 +12,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import java.util.ArrayList;
 import java.util.List;
+import com.mihir.cosmos.DetailActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,13 +29,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerView);
-        adapter = new SpaceEventAdapter(events);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new SpaceEventAdapter(events, event -> {
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra("title", event.getTitle());
+            intent.putExtra("date", event.getDate());
+            intent.putExtra("description", event.getDescription());
+            intent.putExtra("imageUrl", event.getImageUrl());
+            startActivity(intent);
+        });
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Log.d("COSMOS", "Calling API: " + URL);
         fetchSpaceEvents();
+
     }
+
 
     private void fetchSpaceEvents() {
         RequestQueue queue = Volley.newRequestQueue(this);

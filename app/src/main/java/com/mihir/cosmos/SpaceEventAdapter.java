@@ -14,10 +14,17 @@ import java.util.List;
 
 public class SpaceEventAdapter extends RecyclerView.Adapter<SpaceEventAdapter.ViewHolder> {
 
-    private List<SpaceEvent> eventList;
+    public interface OnItemClickListener {
+        void onItemClick(SpaceEvent event);
+    }
 
-    public SpaceEventAdapter(List<SpaceEvent> eventList) {
+    private List<SpaceEvent> eventList;
+    private OnItemClickListener listener;
+
+
+    public SpaceEventAdapter(List<SpaceEvent> eventList, OnItemClickListener listener) {
         this.eventList = eventList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -36,6 +43,7 @@ public class SpaceEventAdapter extends RecyclerView.Adapter<SpaceEventAdapter.Vi
         Glide.with(holder.itemView.getContext())
                 .load(event.getImageUrl())
                 .into(holder.image);
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(event));
     }
 
     @Override
