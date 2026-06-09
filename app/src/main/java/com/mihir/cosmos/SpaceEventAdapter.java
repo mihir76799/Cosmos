@@ -58,9 +58,9 @@ public class SpaceEventAdapter extends RecyclerView.Adapter<SpaceEventAdapter.Vi
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.eventTitle);
-            date = itemView.findViewById(R.id.eventDate);
-            image = itemView.findViewById(R.id.eventImage);
+            title = itemView.findViewById(R.id.text_title);
+            date  = itemView.findViewById(R.id.text_date);
+            image = itemView.findViewById(R.id.image_apod);
         }
     }
 }
