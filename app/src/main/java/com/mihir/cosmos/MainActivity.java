@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import java.util.ArrayList;
 import java.util.List;
+import androidx.appcompat.widget.Toolbar;
 import com.mihir.cosmos.DetailActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new SpaceEventAdapter(events, event -> {
@@ -82,4 +88,23 @@ public class MainActivity extends AppCompatActivity {
 
         queue.add(request);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        // Tint the icon manually
+        MenuItem item = menu.findItem(R.id.action_favorites);
+        item.getIcon().setTint(getResources().getColor(R.color.space_gold, getTheme()));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_favorites) {
+            startActivity(new Intent(this, FavoritesActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
